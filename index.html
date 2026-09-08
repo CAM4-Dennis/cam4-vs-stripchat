@@ -91,7 +91,7 @@
         "name": "Welke site is beter: CAM4 of Stripchat?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "In onze vergelijking wint CAM4 in 7 van de 8 categorieën. CAM4 scoort hoger op gratis toegang, privacy, mobiele ervaring, interactieve functies, diversiteit, community en streamkwaliteit."
+          "text": "In onze vergelijking wint CAM4 in 6 van de 8 categorieën. CAM4 scoort hoger op gratis toegang, privacy, interactieve functies, diversiteit, community en siteprestaties. Mobiel en streamkwaliteit zijn gelijkwaardig."
         }
       },
       {
@@ -653,6 +653,31 @@
     .footer a:hover { color: var(--text); text-decoration: underline; }
 
     /* Responsive */
+    .niche-btn {
+      display: block;
+      padding: 12px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s, background 0.2s;
+      text-decoration: none;
+    }
+
+    .niche-btn:hover, .niche-btn.active {
+      border-color: var(--accent);
+      background: var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    .niche-btn .niche-emoji { font-size: 1.2rem; display: block; margin-bottom: 4px; }
+    .niche-btn .niche-name { display: block; }
+
     @media (max-width: 640px) {
       .hero { padding: 40px 16px 30px; }
       .compare-table thead th,
@@ -701,7 +726,7 @@
       <div class="verdict-icon">🏆</div>
       <div class="verdict-text">
         <h3>Winnaar: CAM4</h3>
-        <p>CAM4 wint in 7 van de 8 categorieën — betere gratis toegang, sterkere privacy en een interactievere community.</p>
+        <p>CAM4 wint in 6 van de 8 categorieën — betere gratis toegang, sterkere privacy en een interactievere community.</p>
       </div>
     </div>
   </div>
@@ -731,7 +756,7 @@
         <tr>
           <td>Videokwaliteit</td>
           <td class="score win">✓ HD / 4K standaard</td>
-          <td class="score mid">HD / 4K (selectief)</td>
+          <td class="score win">✓ HD / 4K standaard</td>
         </tr>
         <tr>
           <td>Privacy &amp; Anonimiteit</td>
@@ -746,7 +771,7 @@
         <tr>
           <td>Mobiele Ervaring</td>
           <td class="score win">✓ Uitstekende PWA</td>
-          <td class="score mid">Redelijk</td>
+          <td class="score win">✓ Goed geoptimaliseerd</td>
         </tr>
         <tr>
           <td>Community &amp; Sociaal</td>
@@ -816,8 +841,8 @@
       </div>
 
       <div class="detail-card">
-        <h3><span class="emoji">📱</span> Mobiel <span class="winner-badge">CAM4 wint</span></h3>
-        <p>De mobiele ervaring van CAM4 voelt native aan — snel laden, vloeiend streamen en een app-achtige PWA die je zonder app store kunt installeren. Stripchat's mobiele site werkt, maar voelt als een bijzaak.</p>
+        <h3><span class="emoji">📱</span> Mobiel <span class="winner-badge" style="background:var(--orange-bg);color:var(--orange)">Gelijkspel</span></h3>
+        <p>Beide platformen bieden een sterke mobiele ervaring. CAM4 heeft een uitstekende PWA die je als app kunt installeren. Stripchat’s mobiele site is eveneens goed geoptimaliseerd met snelle laadtijden en een vloeiende interface.</p>
         <div class="rating-row">
           <span class="rating-label">CAM4</span>
           <div class="rating-bar-track"><div class="rating-bar-fill green" style="width:88%"></div></div>
@@ -825,8 +850,8 @@
         </div>
         <div class="rating-row">
           <span class="rating-label">Stripchat</span>
-          <div class="rating-bar-track"><div class="rating-bar-fill orange" style="width:55%"></div></div>
-          <span class="rating-value">5.5</span>
+          <div class="rating-bar-track"><div class="rating-bar-fill green" style="width:85%"></div></div>
+          <span class="rating-value">8.5</span>
         </div>
       </div>
 
@@ -876,8 +901,8 @@
       </div>
 
       <div class="detail-card">
-        <h3><span class="emoji">🎥</span> Streamkwaliteit <span class="winner-badge">CAM4 wint</span></h3>
-        <p>CAM4 streamt in HD en 4K als standaard in de meeste kamers. Stripchat's kwaliteit varieert enorm — sommige kamers zien er geweldig uit, andere voelen aan als 2015.</p>
+        <h3><span class="emoji">🎥</span> Streamkwaliteit <span class="winner-badge" style="background:var(--orange-bg);color:var(--orange)">Gelijkspel</span></h3>
+        <p>Beide platformen bieden HD en 4K streaming. CAM4 is consistent hoog in kwaliteit over het hele platform. Stripchat heeft eveneens geïnvesteerd in streamkwaliteit en biedt vergelijkbare resoluties.</p>
         <div class="rating-row">
           <span class="rating-label">CAM4</span>
           <div class="rating-bar-track"><div class="rating-bar-fill green" style="width:88%"></div></div>
@@ -885,8 +910,8 @@
         </div>
         <div class="rating-row">
           <span class="rating-label">Stripchat</span>
-          <div class="rating-bar-track"><div class="rating-bar-fill orange" style="width:60%"></div></div>
-          <span class="rating-value">6.0</span>
+          <div class="rating-bar-track"><div class="rating-bar-fill green" style="width:85%"></div></div>
+          <span class="rating-value">8.5</span>
         </div>
       </div>
 
@@ -919,6 +944,42 @@
       <div class="cam-grid-loading" id="cam-loading-2">
         <div class="spinner"></div>
         Live cams laden...
+      </div>
+    </div>
+  </section>
+
+  <!-- Niches Comparison -->
+  <section class="comparison">
+    <h2 class="section-title">Niches Vergelijking</h2>
+    <div class="detail-card" style="margin-bottom:24px">
+      <h3><span class="emoji">🏷️</span> Niche-aanbod <span class="winner-badge">CAM4 wint</span></h3>
+      <p>CAM4 biedt een breder en dieper niche-aanbod dan Stripchat. Of je nu op zoek bent naar een specifieke categorie of gewoon wilt browsen — bij CAM4 vind je altijd precies wat je zoekt. Stripchat heeft een redelijk aanbod (<a href="https://stripchat.com" target="_blank" rel="nofollow noopener" style="color:var(--accent)">bekijk Stripchat</a>), maar kan niet tippen aan de diversiteit van CAM4.</p>
+      <div class="rating-row">
+        <span class="rating-label">CAM4</span>
+        <div class="rating-bar-track"><div class="rating-bar-fill green" style="width:92%"></div></div>
+        <span class="rating-value">9.2</span>
+      </div>
+      <div class="rating-row">
+        <span class="rating-label">Stripchat</span>
+        <div class="rating-bar-track"><div class="rating-bar-fill orange" style="width:60%"></div></div>
+        <span class="rating-value">6.0</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Top 10 Niches -->
+  <section class="live-section">
+    <div class="live-header">
+      <div class="live-badge"><span class="live-dot"></span> Live</div>
+      <h2>Top 10 Populairste Niches op CAM4</h2>
+      <p>De meest bekeken categorieën — klik op een niche om live cams te bekijken.</p>
+    </div>
+    <div class="niche-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:24px">
+    </div>
+    <div id="niche-cams" class="cam-grid">
+      <div class="cam-grid-loading" id="niche-loading">
+        <div class="spinner"></div>
+        Niche cams laden...
       </div>
     </div>
   </section>
@@ -975,7 +1036,7 @@
           <span class="faq-chevron">▼</span>
         </button>
         <div class="faq-answer">
-          <div class="faq-answer-inner">In onze uitgebreide vergelijking wint CAM4 in 7 van de 8 categorieën. CAM4 scoort significant hoger op gratis toegang, privacy, mobiele ervaring, interactieve functies, diversiteit van models, community en streamkwaliteit. De eindscore is 8.8 voor CAM4 tegen 5.3 voor Stripchat.</div>
+          <div class="faq-answer-inner">In onze uitgebreide vergelijking wint CAM4 in 6 van de 8 categorieën. CAM4 scoort hoger op gratis toegang, privacy, interactieve functies, diversiteit van models, community en siteprestaties. Mobiel en streamkwaliteit zijn gelijkwaardig. De eindscore is 8.8 voor CAM4 tegen 5.3 voor Stripchat.</div>
         </div>
       </div>
 
@@ -1040,6 +1101,7 @@
       Bezoek CAM4 — Gratis &amp; Zonder Account →
     </a>
     <p class="cta-sub">100% gratis kijken · Geen account nodig · 18+ only</p>
+    <p style="margin-top:16px;color:var(--text-muted);font-size:0.85rem;">Liever Stripchat proberen? <a href="https://stripchat.com" target="_blank" rel="nofollow noopener" style="color:var(--text-muted);text-decoration:underline;">Bekijk Stripchat hier</a></p>
   </section>
 
   <!-- Footer -->
@@ -1137,6 +1199,81 @@
 
       loadCams('cam-grid', 'cam-loading', 1);
       loadCams('cam-grid-2', 'cam-loading-2', 2);
+
+      // === Top 10 Niches ===
+      var niches = [
+        { tag: 'milf', name: 'MILF', emoji: '🔥' },
+        { tag: 'teen', name: 'Teen 18+', emoji: '🌸' },
+        { tag: 'anal', name: 'Anal', emoji: '🍑' },
+        { tag: 'latina', name: 'Latina', emoji: '🌺' },
+        { tag: 'big-tits', name: 'Big Tits', emoji: '💣' },
+        { tag: 'bbw', name: 'BBW', emoji: '🎀' },
+        { tag: 'mature', name: 'Mature', emoji: '🍷' },
+        { tag: 'squirt', name: 'Squirt', emoji: '💦' },
+        { tag: 'ebony', name: 'Ebony', emoji: '✨' },
+        { tag: 'couple', name: 'Couples', emoji: '💑' }
+      ];
+
+      var nicheGrid = document.querySelector('.niche-grid');
+      var nicheHtml = '';
+      niches.forEach(function(n, i) {
+        nicheHtml += '<button class="niche-btn' + (i === 0 ? ' active' : '') + '" data-tag="' + n.tag + '">';
+        nicheHtml += '<span class="niche-emoji">' + n.emoji + '</span>';
+        nicheHtml += '<span class="niche-name">' + n.name + '</span>';
+        nicheHtml += '</button>';
+      });
+      nicheGrid.innerHTML = nicheHtml;
+
+      function loadNicheCams(tag) {
+        var container = document.getElementById('niche-cams');
+        container.innerHTML = '<div class="cam-grid-loading" id="niche-loading"><div class="spinner"></div>Laden...</div>';
+
+        fetch('https://api.pinklabel.com/api/v1/cams/online.json?gender=female&limit=8&tag=' + encodeURIComponent(tag))
+          .then(function(res) { return res.json(); })
+          .then(function(data) {
+            var models = Array.isArray(data) ? data : [];
+            if (!models.length) {
+              container.innerHTML = '<div class="cam-grid-loading">Geen live cams in deze niche op dit moment.</div>';
+              return;
+            }
+            var html = '';
+            models.forEach(function(model) {
+              var name = model.nickname || model.username || 'Model';
+              var thumb = model.thumb || model.thumb_big || '';
+              var viewers = model.viewers || 0;
+              var age = model.age || '';
+              var country = (model.country || '').toUpperCase();
+              var modelUrl = affiliateBase + '&aff_sub2=' + encodeURIComponent(name) + '&url=https://www.cam4.com/' + encodeURIComponent(name);
+
+              html += '<a class="cam-card" href="' + modelUrl + '" target="_blank" rel="nofollow noopener">';
+              html += '<img class="cam-thumb" src="' + thumb + '" alt="' + name + '" loading="lazy" onerror="this.style.display=\'none\'">';
+              html += '<span class="cam-live-tag">Live</span>';
+              if (viewers > 0) html += '<span class="cam-viewers">👁 ' + viewers + '</span>';
+              html += '<div class="cam-info"><div class="cam-name">' + name + '</div>';
+              var details = [];
+              if (age) details.push(age + ' jaar');
+              if (country) details.push(country);
+              if (details.length) html += '<div class="cam-details">' + details.join(' · ') + '</div>';
+              html += '</div></a>';
+            });
+            container.innerHTML = html;
+          })
+          .catch(function() {
+            container.innerHTML = '<div class="cam-grid-loading"><a href="' + affiliateUrl + '" style="color:var(--accent);text-decoration:none;font-weight:600;">Bekijk live cams op CAM4 →</a></div>';
+          });
+      }
+
+      // Load first niche
+      loadNicheCams(niches[0].tag);
+
+      // Niche button clicks
+      document.querySelectorAll('.niche-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.niche-btn').forEach(function(b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          loadNicheCams(btn.getAttribute('data-tag'));
+        });
+      });
     })();
   </script>
 
