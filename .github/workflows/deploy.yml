@@ -19,17 +19,18 @@ jobs:
           echo "IP whitelisted, waiting for firewall reload..."
           sleep 5
 
-      - name: Deploy via SFTP
-        run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq sshpass
-          sshpass -p "${{ secrets.FTP_PASSWORD }}" sftp -o StrictHostKeyChecking=no -o ConnectTimeout=30 -P 22 \
-            ${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }} <<'EOF'
-          cd public_html
-          put index.html
-          put privacy.html
-          put favicon.svg
-          put robots.txt
-          put sitemap.xml
-          quit
-          EOF
-        working-directory: ./
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./
+          server-dir: ./
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github*
+            **/.github*/**
+            **/.gitignore
