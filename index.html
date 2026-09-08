@@ -653,30 +653,31 @@
     .footer a:hover { color: var(--text); text-decoration: underline; }
 
     /* Responsive */
-    .niche-btn {
-      display: block;
-      padding: 12px 16px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
+    .niche-section { margin-bottom: 32px; }
+
+    .niche-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.1rem;
+      font-weight: 700;
       color: var(--text);
-      font-family: inherit;
-      font-size: 0.88rem;
-      font-weight: 600;
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.2s, border-color 0.2s, background 0.2s;
       text-decoration: none;
+      margin-bottom: 12px;
+      transition: color 0.2s;
     }
 
-    .niche-btn:hover, .niche-btn.active {
-      border-color: var(--accent);
-      background: var(--accent-glow);
-      transform: translateY(-2px);
+    .niche-title:hover { color: var(--accent); }
+
+    .niche-title .niche-emoji { font-size: 1.2rem; }
+
+    .niche-title .niche-arrow {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      transition: transform 0.2s, color 0.2s;
     }
 
-    .niche-btn .niche-emoji { font-size: 1.2rem; display: block; margin-bottom: 4px; }
-    .niche-btn .niche-name { display: block; }
+    .niche-title:hover .niche-arrow { transform: translateX(4px); color: var(--accent); }
 
     @media (max-width: 640px) {
       .hero { padding: 40px 16px 30px; }
@@ -972,16 +973,9 @@
     <div class="live-header">
       <div class="live-badge"><span class="live-dot"></span> Live</div>
       <h2>Top 10 Populairste Niches op CAM4</h2>
-      <p>De meest bekeken categorieën — klik op een niche om live cams te bekijken.</p>
+      <p>De meest bekeken categorieën — bekijk live cams per niche.</p>
     </div>
-    <div class="niche-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:24px">
-    </div>
-    <div id="niche-cams" class="cam-grid">
-      <div class="cam-grid-loading" id="niche-loading">
-        <div class="spinner"></div>
-        Niche cams laden...
-      </div>
-    </div>
+    <div id="niches-container"></div>
   </section>
 
   <!-- Final Score -->
@@ -1214,66 +1208,62 @@
         { tag: 'couple', name: 'Couples', emoji: '💑' }
       ];
 
-      var nicheGrid = document.querySelector('.niche-grid');
-      var nicheHtml = '';
-      niches.forEach(function(n, i) {
-        nicheHtml += '<button class="niche-btn' + (i === 0 ? ' active' : '') + '" data-tag="' + n.tag + '">';
-        nicheHtml += '<span class="niche-emoji">' + n.emoji + '</span>';
-        nicheHtml += '<span class="niche-name">' + n.name + '</span>';
-        nicheHtml += '</button>';
-      });
-      nicheGrid.innerHTML = nicheHtml;
+      function renderNicheCams(models, nicheUrl) {
+        if (!models.length) {
+          return '<div class="cam-grid-loading"><a href="' + nicheUrl + '" style="color:var(--accent);text-decoration:none;font-weight:600;">Bekijk deze niche op CAM4 →</a></div>';
+        }
+        var html = '';
+        models.forEach(function(model) {
+          var name = model.nickname || 'Model';
+          var thumb = model.thumb || model.thumb_big || '';
+          var viewers = model.viewers || 0;
+          var age = model.age || '';
+          var country = (model.country || '').toUpperCase();
+          var modelUrl = affiliateBase + '&aff_sub2=' + encodeURIComponent(name) + '&url=https://www.cam4.com/' + encodeURIComponent(name);
 
-      function loadNicheCams(tag) {
-        var container = document.getElementById('niche-cams');
-        container.innerHTML = '<div class="cam-grid-loading" id="niche-loading"><div class="spinner"></div>Laden...</div>';
-
-        fetch('https://api.pinklabel.com/api/v1/cams/online.json?gender=female&limit=8&tag=' + encodeURIComponent(tag))
-          .then(function(res) { return res.json(); })
-          .then(function(data) {
-            var models = Array.isArray(data) ? data : [];
-            if (!models.length) {
-              container.innerHTML = '<div class="cam-grid-loading">Geen live cams in deze niche op dit moment.</div>';
-              return;
-            }
-            var html = '';
-            models.forEach(function(model) {
-              var name = model.nickname || model.username || 'Model';
-              var thumb = model.thumb || model.thumb_big || '';
-              var viewers = model.viewers || 0;
-              var age = model.age || '';
-              var country = (model.country || '').toUpperCase();
-              var modelUrl = affiliateBase + '&aff_sub2=' + encodeURIComponent(name) + '&url=https://www.cam4.com/' + encodeURIComponent(name);
-
-              html += '<a class="cam-card" href="' + modelUrl + '" target="_blank" rel="nofollow noopener">';
-              html += '<img class="cam-thumb" src="' + thumb + '" alt="' + name + '" loading="lazy" onerror="this.style.display=\'none\'">';
-              html += '<span class="cam-live-tag">Live</span>';
-              if (viewers > 0) html += '<span class="cam-viewers">👁 ' + viewers + '</span>';
-              html += '<div class="cam-info"><div class="cam-name">' + name + '</div>';
-              var details = [];
-              if (age) details.push(age + ' jaar');
-              if (country) details.push(country);
-              if (details.length) html += '<div class="cam-details">' + details.join(' · ') + '</div>';
-              html += '</div></a>';
-            });
-            container.innerHTML = html;
-          })
-          .catch(function() {
-            container.innerHTML = '<div class="cam-grid-loading"><a href="' + affiliateUrl + '" style="color:var(--accent);text-decoration:none;font-weight:600;">Bekijk live cams op CAM4 →</a></div>';
-          });
+          html += '<a class="cam-card" href="' + modelUrl + '" target="_blank" rel="nofollow noopener">';
+          html += '<img class="cam-thumb" src="' + thumb + '" alt="' + name + '" loading="lazy" onerror="this.style.display=\'none\'">';
+          html += '<span class="cam-live-tag">Live</span>';
+          if (viewers > 0) html += '<span class="cam-viewers">👁 ' + viewers + '</span>';
+          html += '<div class="cam-info"><div class="cam-name">' + name + '</div>';
+          var details = [];
+          if (age) details.push(age + ' jaar');
+          if (country) details.push(country);
+          if (details.length) html += '<div class="cam-details">' + details.join(' · ') + '</div>';
+          html += '</div></a>';
+        });
+        return html;
       }
 
-      // Load first niche
-      loadNicheCams(niches[0].tag);
+      // Load all models in one batch, then distribute across niches
+      fetch('https://api.pinklabel.com/api/v1/cams/online.json?limit=50&gender=female')
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          var allModels = Array.isArray(data) ? data : [];
+          var container = document.getElementById('niches-container');
+          var html = '';
+          var perNiche = 5;
 
-      // Niche button clicks
-      document.querySelectorAll('.niche-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          document.querySelectorAll('.niche-btn').forEach(function(b) { b.classList.remove('active'); });
-          btn.classList.add('active');
-          loadNicheCams(btn.getAttribute('data-tag'));
+          niches.forEach(function(niche, i) {
+            var nicheUrl = affiliateBase + '&aff_sub2=' + encodeURIComponent(niche.tag) + '&url=https://nl.cam4.com/niches/' + encodeURIComponent(niche.tag);
+            var start = i * perNiche;
+            var models = allModels.slice(start, start + perNiche);
+
+            html += '<div class="niche-section">';
+            html += '<a class="niche-title" href="' + nicheUrl + '" target="_blank" rel="nofollow noopener">';
+            html += '<span class="niche-emoji">' + niche.emoji + '</span> ';
+            html += niche.name + ' Cams';
+            html += ' <span class="niche-arrow">→</span>';
+            html += '</a>';
+            html += '<div class="cam-grid">' + renderNicheCams(models, nicheUrl) + '</div>';
+            html += '</div>';
+          });
+
+          container.innerHTML = html;
+        })
+        .catch(function() {
+          document.getElementById('niches-container').innerHTML = '<div class="cam-grid-loading"><a href="' + affiliateUrl + '" style="color:var(--accent);text-decoration:none;font-weight:600;">Bekijk live cams op CAM4 →</a></div>';
         });
-      });
     })();
   </script>
 
