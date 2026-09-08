@@ -17,7 +17,7 @@ jobs:
           curl -sf -X POST "https://msd5362.mjhst.com/updateip.php" \
             -H "Authorization: Bearer ${{ secrets.MOJOHOST_TOKEN }}"
           echo "IP whitelisted, waiting for firewall reload..."
-          sleep 5
+          sleep 15
 
       - name: Deploy via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
