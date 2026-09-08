@@ -1560,6 +1560,18 @@
           var metaDesc = document.querySelector('meta[name="description"]');
           if (metaDesc) metaDesc.setAttribute('content', tpl(t.metaDesc, lang));
 
+          // OG & Twitter meta
+          var ogTitle = document.querySelector('meta[property="og:title"]');
+          var ogDesc = document.querySelector('meta[property="og:description"]');
+          var ogLocale = document.querySelector('meta[property="og:locale"]');
+          var twTitle = document.querySelector('meta[name="twitter:title"]');
+          var twDesc = document.querySelector('meta[name="twitter:description"]');
+          if (ogTitle && t.ogTitle) ogTitle.setAttribute('content', tpl(t.ogTitle, lang));
+          if (ogDesc && t.ogDesc) ogDesc.setAttribute('content', t.ogDesc);
+          if (ogLocale && t.ogLocale) ogLocale.setAttribute('content', t.ogLocale);
+          if (twTitle && t.ogTitle) twTitle.setAttribute('content', tpl(t.ogTitle, lang));
+          if (twDesc && t.ogDesc) twDesc.setAttribute('content', t.ogDesc);
+
           // data-i18n (textContent)
           document.querySelectorAll('[data-i18n]').forEach(function(el) {
             var key = el.getAttribute('data-i18n');
