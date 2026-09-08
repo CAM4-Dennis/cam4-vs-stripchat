@@ -708,7 +708,7 @@
 
     @media (max-width: 640px) {
       .niche-section .cam-grid { grid-template-columns: repeat(3, 1fr); }
-      #cam-grid-top { grid-template-columns: repeat(3, 1fr) !important; }
+      #cam-grid-top, #stripchat-grid { grid-template-columns: repeat(3, 1fr) !important; }
     }
   </style>
 </head>
@@ -744,6 +744,16 @@
         <div class="spinner"></div>
         Live cams laden...
       </div>
+    </div>
+  </section>
+
+  <!-- Stripchat Live Strip -->
+  <section class="live-section" style="margin-top:0;padding-top:8px">
+    <div class="live-header">
+      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:8px">Of bekijk Stripchat</p>
+    </div>
+    <div id="stripchat-grid" class="cam-grid" style="grid-template-columns:repeat(5,1fr)">
+      <div class="cam-grid-loading">Stripchat cams laden...</div>
     </div>
   </section>
 
@@ -1251,6 +1261,47 @@
       }
 
       loadCams('cam-grid-top', 'cam-loading-top', 1, 10);
+
+      // === Stripchat cams ===
+      (function() {
+        var scContainer = document.getElementById('stripchat-grid');
+        var supabaseUrl = 'https://wcjchvvsslzzuxwhapwn.supabase.co/functions/v1/cam-proxy';
+        var supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndjamNodnZzc2x6enV4d2hhcHduIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNzM3MDAsImV4cCI6MjA5MDc0OTcwMH0.ynA5TlAHJTl-T7PimhmL2EsJk4FLCIWS4O5HNTnF10M';
+
+        fetch(supabaseUrl + '?platform=stripchat&tag=girls&limit=5&status=public', {
+          headers: { 'Authorization': 'Bearer ' + supabaseKey, 'apikey': supabaseKey }
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          var models = data.models || [];
+          if (!models.length) {
+            scContainer.innerHTML = '<div class="cam-grid-loading"><a href="' + stripchatUrl + '" style="color:var(--accent);text-decoration:none;font-weight:600;">Bekijk Stripchat \u2192</a></div>';
+            return;
+          }
+          var html = '';
+          models.forEach(function(m) {
+            var name = m.username || 'Model';
+            var thumb = m.snapshotUrl || m.popularSnapshotUrl || '';
+            var viewers = m.viewersCount || 0;
+            var country = (m.modelsCountry || '').toUpperCase();
+            var modelUrl = 'https://go.mavrtracktor.com/?onlineModels=' + encodeURIComponent(name) + '&userId=' + stripchatUserId;
+
+            html += '<a class="cam-card" href="' + modelUrl + '" target="_blank" rel="nofollow noopener">';
+            html += '<img class="cam-thumb" src="' + thumb + '" alt="' + name + '" loading="lazy" onerror="this.style.display=\'none\'">';
+            html += '<span class="cam-live-tag" style="background:#7b2ff7">Live</span>';
+            if (viewers > 0) html += '<span class="cam-viewers">\ud83d\udc41 ' + viewers + '</span>';
+            html += '<div class="cam-info"><div class="cam-name">' + name + '</div>';
+            var details = [];
+            if (country) details.push(country);
+            if (details.length) html += '<div class="cam-details">' + details.join(' \u00b7 ') + '</div>';
+            html += '</div></a>';
+          });
+          scContainer.innerHTML = html;
+        })
+        .catch(function() {
+          scContainer.innerHTML = '<div class="cam-grid-loading"><a href="' + stripchatUrl + '" style="color:var(--accent);text-decoration:none;font-weight:600;">Bekijk Stripchat \u2192</a></div>';
+        });
+      })();
       loadCams('cam-grid', 'cam-loading', 2);
       loadCams('cam-grid-2', 'cam-loading-2', 3);
 
