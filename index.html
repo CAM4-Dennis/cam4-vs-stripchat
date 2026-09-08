@@ -1097,26 +1097,26 @@
       });
 
       // === Live Cams ===
-      function loadCams(containerId, loadingId, offset) {
+      function loadCams(containerId, loadingId, page) {
         var container = document.getElementById(containerId);
         var loading = document.getElementById(loadingId);
 
-        fetch('https://api.pinklabel.com/api/v1/models?status=online&gender=female&limit=8&offset=' + (offset || 0))
+        fetch('https://api.pinklabel.com/api/v1/cams/online.json?gender=female&limit=8&page=' + (page || 1))
           .then(function(res) { return res.json(); })
           .then(function(data) {
             if (loading) loading.remove();
-            var models = data.models || data.data || data;
-            if (!Array.isArray(models) || models.length === 0) {
+            var models = Array.isArray(data) ? data : (data.models || data.data || []);
+            if (!models.length) {
               container.innerHTML = '<div class="cam-grid-loading">Geen live cams beschikbaar op dit moment.</div>';
               return;
             }
             var html = '';
             models.forEach(function(model) {
-              var name = model.nickname || model.username || model.name || 'Model';
-              var thumb = model.thumb || model.thumbnail || model.preview || model.image || '';
-              var viewers = model.viewers || model.num_users || model.viewerCount || 0;
+              var name = model.nickname || model.username || 'Model';
+              var thumb = model.thumb || model.thumb_big || '';
+              var viewers = model.viewers || 0;
               var age = model.age || '';
-              var country = model.country || model.countryName || '';
+              var country = (model.country || '').toUpperCase();
               var modelUrl = affiliateUrl + '&mp_show_chat_with=' + encodeURIComponent(name);
 
               html += '<a class="cam-card" href="' + modelUrl + '" target="_blank" rel="nofollow noopener">';
@@ -1143,8 +1143,8 @@
           });
       }
 
-      loadCams('cam-grid', 'cam-loading', 0);
-      loadCams('cam-grid-2', 'cam-loading-2', 8);
+      loadCams('cam-grid', 'cam-loading', 1);
+      loadCams('cam-grid-2', 'cam-loading-2', 2);
     })();
   </script>
 
