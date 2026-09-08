@@ -1064,17 +1064,9 @@
       });
 
       // === Affiliate URL ===
-      var host = window.location.hostname.replace('www.', '');
-      var domainMap = {
-        'steipchat.com': 'steipchat',
-        'steipchat.nl': 'steipchat',
-        'stripvhat.com': 'stripvhat',
-        'stripchst.com': 'stripchst',
-        'can4.com': 'can4',
-        'cam4-vs-stripchat.nl': 'cam4vsstripchat'
-      };
-      var sub = domainMap[host] || host.split('.')[0] || 'typo';
-      var affiliateUrl = 'https://t.crntv.link/cam4.com/?aff_id=1961&aff_sub=' + encodeURIComponent(sub);
+      var affSub = 'cam4vsstripchat';
+      var affiliateBase = 'https://offers.cam4tracking.com/aff_c?offer_id=278&aff_id=1961&aff_sub=' + affSub;
+      var affiliateUrl = affiliateBase + '&url=https://www.cam4.com';
 
       // Update all CTA links
       var ctaLinks = document.querySelectorAll('#cta-link, .cta-btn, #live-cta-link');
@@ -1117,7 +1109,7 @@
               var viewers = model.viewers || 0;
               var age = model.age || '';
               var country = (model.country || '').toUpperCase();
-              var modelUrl = affiliateUrl + '&mp_show_chat_with=' + encodeURIComponent(name);
+              var modelUrl = affiliateBase + '&aff_sub2=' + encodeURIComponent(name) + '&url=https://www.cam4.com/' + encodeURIComponent(name);
 
               html += '<a class="cam-card" href="' + modelUrl + '" target="_blank" rel="nofollow noopener">';
               html += '<img class="cam-thumb" src="' + thumb + '" alt="' + name + '" loading="lazy" onerror="this.style.display=\'none\'">';
