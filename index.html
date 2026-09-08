@@ -728,7 +728,7 @@
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-badge">Bijgewerkt september 2026</div>
+    <div class="hero-badge" id="hero-date">Bijgewerkt september 2026</div>
     <h1>CAM4 <span class="vs">vs</span> Stripchat</h1>
     <p>Op zoek naar de beste live cam ervaring? We hebben beide platformen naast elkaar getest. Dit is wat we vonden.</p>
   </section>
@@ -1112,12 +1112,35 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <p>Deze vergelijking is gebaseerd op openbaar beschikbare informatie en gebruikstests van september 2026.</p>
+    <p id="footer-date">Deze vergelijking is gebaseerd op openbaar beschikbare informatie en gebruikstests van september 2026.</p>
     <p style="margin-top:8px;">Deze site bevat affiliate links. We kunnen een commissie verdienen zonder extra kosten voor jou. · <a href="/privacy.html">Privacy</a> · Alleen 18+</p>
   </footer>
 
   <script>
     (function() {
+      // === Dynamic Date ===
+      (function() {
+        var months = ['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];
+        var now = new Date();
+        var month = months[now.getMonth()];
+        var year = now.getFullYear();
+        var label = month + ' ' + year;
+        var heroEl = document.getElementById('hero-date');
+        var footerEl = document.getElementById('footer-date');
+        if (heroEl) heroEl.textContent = 'Bijgewerkt ' + label;
+        if (footerEl) footerEl.textContent = 'Deze vergelijking is gebaseerd op openbaar beschikbare informatie en gebruikstests van ' + label + '.';
+        document.title = document.title.replace(/\(\d{4}\)/, '(' + year + ')');
+        var schemaEl = document.querySelector('script[type="application/ld+json"]');
+        if (schemaEl) {
+          try {
+            var schema = JSON.parse(schemaEl.textContent);
+            var iso = now.toISOString().slice(0, 10);
+            if (schema.dateModified) schema.dateModified = iso;
+            schemaEl.textContent = JSON.stringify(schema);
+          } catch(e) {}
+        }
+      })();
+
       // === Age Gate ===
       var gate = document.getElementById('age-gate');
       if (localStorage.getItem('age_verified') === 'true') {
