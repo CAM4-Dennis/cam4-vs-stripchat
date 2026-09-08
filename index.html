@@ -654,6 +654,9 @@
 
     /* Responsive */
     .niche-section { margin-bottom: 32px; }
+    .niche-section .cam-grid {
+      grid-template-columns: repeat(5, 1fr);
+    }
 
     .niche-title {
       display: inline-flex;
@@ -696,6 +699,15 @@
 
     @media (min-width: 768px) {
       .cam-grid { grid-template-columns: repeat(4, 1fr); }
+      .niche-section .cam-grid { grid-template-columns: repeat(5, 1fr); }
+    }
+
+    @media (max-width: 767px) and (min-width: 641px) {
+      .niche-section .cam-grid { grid-template-columns: repeat(5, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      .niche-section .cam-grid { grid-template-columns: repeat(3, 1fr); }
     }
   </style>
 </head>
