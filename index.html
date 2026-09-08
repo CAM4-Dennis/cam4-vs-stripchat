@@ -708,6 +708,7 @@
 
     @media (max-width: 640px) {
       .niche-section .cam-grid { grid-template-columns: repeat(3, 1fr); }
+      #cam-grid-top { grid-template-columns: repeat(3, 1fr) !important; }
     }
   </style>
 </head>
@@ -731,6 +732,19 @@
     <div class="hero-badge" id="hero-date">Bijgewerkt september 2026</div>
     <h1>CAM4 <span class="vs">vs</span> Stripchat</h1>
     <p>Op zoek naar de beste live cam ervaring? We hebben beide platformen naast elkaar getest. Dit is wat we vonden.</p>
+  </section>
+
+  <!-- Live Cams Top -->
+  <section class="live-section" style="margin-top:0;padding-top:0">
+    <div class="live-header">
+      <h2 style="font-size:1.6rem;font-weight:800;text-transform:uppercase;letter-spacing:1px">Zoek je live cams?</h2>
+    </div>
+    <div id="cam-grid-top" class="cam-grid" style="grid-template-columns:repeat(5,1fr)">
+      <div class="cam-grid-loading" id="cam-loading-top">
+        <div class="spinner"></div>
+        Live cams laden...
+      </div>
+    </div>
   </section>
 
   <!-- Quick Verdict -->
@@ -1189,11 +1203,12 @@
       });
 
       // === Live Cams ===
-      function loadCams(containerId, loadingId, page) {
+      function loadCams(containerId, loadingId, page, count) {
         var container = document.getElementById(containerId);
         var loading = document.getElementById(loadingId);
+        var limit = count || 8;
 
-        fetch('https://api.pinklabel.com/api/v1/cams/online.json?gender=female&limit=8&page=' + (page || 1))
+        fetch('https://api.pinklabel.com/api/v1/cams/online.json?gender=female&limit=' + limit + '&page=' + (page || 1))
           .then(function(res) { return res.json(); })
           .then(function(data) {
             if (loading) loading.remove();
@@ -1235,8 +1250,9 @@
           });
       }
 
-      loadCams('cam-grid', 'cam-loading', 1);
-      loadCams('cam-grid-2', 'cam-loading-2', 2);
+      loadCams('cam-grid-top', 'cam-loading-top', 1, 10);
+      loadCams('cam-grid', 'cam-loading', 2);
+      loadCams('cam-grid-2', 'cam-loading-2', 3);
 
       // === Top 10 Niches ===
       var niches = [
