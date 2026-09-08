@@ -12,6 +12,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Whitelist runner IP
+        run: |
+          curl -sf -X POST "https://msd5362.mjhst.com/updateip.php" \
+            -H "Authorization: Bearer ${{ secrets.MOJOHOST_TOKEN }}"
+          echo "IP whitelisted, waiting for firewall reload..."
+          sleep 5
+
       - name: Deploy via SFTP
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq sshpass
