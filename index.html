@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="nl" id="html-root">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,6 +23,9 @@
 
   <!-- Favicon -->
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <!-- i18n -->
+  <script src="/i18n.js"></script>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -220,6 +223,21 @@
       margin: 0 auto;
       padding: 0 20px;
     }
+
+    /* Language Switcher */
+    .lang-bar {
+      position: fixed; top: 0; right: 0; z-index: 10000;
+      display: flex; gap: 2px; padding: 8px 12px;
+      background: rgba(10,10,15,0.85); backdrop-filter: blur(8px);
+      border-radius: 0 0 0 10px; border-bottom: 1px solid var(--border); border-left: 1px solid var(--border);
+    }
+    .lang-btn {
+      padding: 4px 10px; border: 1px solid transparent; border-radius: 6px;
+      background: none; color: var(--text-muted); font-family: inherit;
+      font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    }
+    .lang-btn:hover { color: var(--text); border-color: var(--border); }
+    .lang-btn.active { color: var(--accent); border-color: var(--accent); background: var(--accent-glow); }
 
     /* Age Gate */
     .age-gate {
@@ -762,30 +780,40 @@
 </head>
 <body>
 
+  <!-- Language Switcher -->
+  <div class="lang-bar" id="lang-bar">
+    <button class="lang-btn active" data-lang="nl">NL</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="de">DE</button>
+    <button class="lang-btn" data-lang="fr">FR</button>
+    <button class="lang-btn" data-lang="it">IT</button>
+    <button class="lang-btn" data-lang="pt">PT</button>
+  </div>
+
   <!-- Age Gate (overlay — content stays in DOM for SEO) -->
   <div class="age-gate" id="age-gate">
     <div class="age-gate-box">
       <div class="ag-icon">🔞</div>
-      <h2>Leeftijdsverificatie</h2>
-      <p>Deze website bevat content die alleen geschikt is voor volwassenen (18+). Door verder te gaan bevestig je dat je 18 jaar of ouder bent.</p>
+      <h2 data-i18n="ageTitle">Leeftijdsverificatie</h2>
+      <p data-i18n="ageText">Deze website bevat content die alleen geschikt is voor volwassenen (18+). Door verder te gaan bevestig je dat je 18 jaar of ouder bent.</p>
       <div class="ag-buttons">
-        <button class="ag-btn ag-btn-yes" id="age-yes">Ik ben 18+</button>
-        <button class="ag-btn ag-btn-no" id="age-no">Verlaat site</button>
+        <button class="ag-btn ag-btn-yes" id="age-yes" data-i18n="ageYes">Ik ben 18+</button>
+        <button class="ag-btn ag-btn-no" id="age-no" data-i18n="ageNo">Verlaat site</button>
       </div>
     </div>
   </div>
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-badge" id="hero-date">Bijgewerkt september 2026</div>
-    <h1>CAM4 <span class="vs">vs</span> Stripchat</h1>
-    <p>Op zoek naar de beste live cam ervaring? We hebben beide platformen naast elkaar getest. Dit is wat we vonden.</p>
+    <div class="hero-badge" id="hero-date" data-i18n-tpl="heroUpdated">Bijgewerkt september 2026</div>
+    <h1 data-i18n-html="heroTitle">CAM4 <span class="vs">vs</span> Stripchat</h1>
+    <p data-i18n="heroSub">Op zoek naar de beste live cam ervaring? We hebben beide platformen naast elkaar getest. Dit is wat we vonden.</p>
   </section>
 
   <!-- Live Cams Top -->
   <section class="live-section" style="margin-top:0;padding-top:0">
     <div class="live-header">
-      <h2 style="font-size:1.6rem;font-weight:800;text-transform:uppercase;letter-spacing:1px">Zoek je live cams?</h2>
+      <h2 style="font-size:1.6rem;font-weight:800;text-transform:uppercase;letter-spacing:1px" data-i18n="lookingForCams">Zoek je live cams?</h2>
     </div>
     <div id="cam-grid-top" class="cam-grid" style="grid-template-columns:repeat(5,1fr)">
       <div class="cam-grid-loading" id="cam-loading-top">
@@ -798,7 +826,7 @@
   <!-- Stripchat Live Strip -->
   <section class="live-section" style="margin-top:0;padding-top:8px">
     <div class="live-header">
-      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:8px">Of bekijk Stripchat</p>
+      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:8px" data-i18n="orCheckStripchat">Of bekijk Stripchat</p>
     </div>
     <div id="stripchat-grid" class="cam-grid" style="grid-template-columns:repeat(5,1fr)">
       <div class="cam-grid-loading">Stripchat cams laden...</div>
@@ -810,15 +838,15 @@
     <div class="verdict-card">
       <div class="verdict-icon">🏆</div>
       <div class="verdict-text">
-        <h3>Winnaar: CAM4</h3>
-        <p>CAM4 wint in 5 van de 8 categorieën — sterkere privacy, meer interactie, grotere diversiteit en een betere community.</p>
+        <h3 data-i18n="verdictTitle">Winnaar: CAM4</h3>
+        <p data-i18n="verdictText">CAM4 wint in 5 van de 8 categorieën — sterkere privacy, meer interactie, grotere diversiteit en een betere community.</p>
       </div>
     </div>
   </div>
 
   <!-- Comparison Table -->
   <section class="comparison">
-    <h2 class="section-title">Directe Vergelijking</h2>
+    <h2 class="section-title" data-i18n="directComparison">Directe Vergelijking</h2>
     <table class="compare-table">
       <thead>
         <tr>
@@ -876,8 +904,8 @@
   <section class="live-section">
     <div class="live-header">
       <div class="live-badge"><span class="live-dot"></span> Live</div>
-      <h2>Nu Live op CAM4</h2>
-      <p>Bekijk wie er nu online is — gratis en zonder account.</p>
+      <h2 data-i18n="nowLive">Nu Live op CAM4</h2>
+      <p data-i18n="whoIsOnline">Bekijk wie er nu online is — gratis en zonder account.</p>
     </div>
     <div id="cam-grid" class="cam-grid">
       <div class="cam-grid-loading" id="cam-loading">
@@ -886,13 +914,13 @@
       </div>
     </div>
     <div class="live-cta">
-      <a href="#" id="live-cta-link">Bekijk alle live cams op CAM4 →</a>
+      <a href="#" id="live-cta-link" data-i18n="viewAllLive">Bekijk alle live cams op CAM4 →</a>
     </div>
   </section>
 
   <!-- Detail Cards -->
   <section class="details">
-    <h2 class="section-title">Uitgebreide Vergelijking</h2>
+    <h2 class="section-title" data-i18n="detailedComparison">Uitgebreide Vergelijking</h2>
     <div class="detail-grid">
 
       <div class="detail-card">
@@ -1022,8 +1050,8 @@
   <section class="live-section">
     <div class="live-header">
       <div class="live-badge"><span class="live-dot"></span> Live</div>
-      <h2>Populaire Cam Shows</h2>
-      <p>De best bekeken streams op dit moment.</p>
+      <h2 data-i18n="popularShows">Populaire Cam Shows</h2>
+      <p data-i18n="bestWatched">De best bekeken streams op dit moment.</p>
     </div>
     <div id="cam-grid-2" class="cam-grid">
       <div class="cam-grid-loading" id="cam-loading-2">
@@ -1036,7 +1064,7 @@
   <!-- Stripchat Strip 2 -->
   <section class="live-section" style="margin-top:0;padding-top:8px">
     <div class="live-header">
-      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:8px">Of bekijk Stripchat</p>
+      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:8px" data-i18n="orCheckStripchat">Of bekijk Stripchat</p>
     </div>
     <div id="stripchat-grid-2" class="cam-grid" style="grid-template-columns:repeat(5,1fr)">
       <div class="cam-grid-loading">Stripchat cams laden...</div>
@@ -1045,10 +1073,10 @@
 
   <!-- Niches Comparison -->
   <section class="comparison">
-    <h2 class="section-title">Niches Vergelijking</h2>
+    <h2 class="section-title" data-i18n="nichesComparison">Niches Vergelijking</h2>
     <div class="detail-card" style="margin-bottom:24px">
-      <h3><span class="emoji">🏷️</span> Niche-aanbod <span class="winner-badge">CAM4 wint</span></h3>
-      <p>CAM4 biedt een breder en dieper niche-aanbod dan Stripchat. Of je nu op zoek bent naar een specifieke categorie of gewoon wilt browsen — bij CAM4 vind je altijd precies wat je zoekt. Stripchat heeft een redelijk aanbod (<a href="#" class="stripchat-link" target="_blank" rel="nofollow noopener" style="color:var(--accent)">bekijk Stripchat</a>), maar kan niet tippen aan de diversiteit van CAM4.</p>
+      <h3><span class="emoji">🏷️</span> <span data-i18n="nichesTitle">Niche-aanbod</span> <span class="winner-badge" data-i18n="cam4Wins">CAM4 wint</span></h3>
+      <p data-i18n-html="nichesText">CAM4 biedt een breder en dieper niche-aanbod dan Stripchat. Of je nu op zoek bent naar een specifieke categorie of gewoon wilt browsen — bij CAM4 vind je altijd precies wat je zoekt. Stripchat heeft een redelijk aanbod (<a href="#" class="stripchat-link" target="_blank" rel="nofollow noopener" style="color:var(--accent)">bekijk Stripchat</a>), maar kan niet tippen aan de diversiteit van CAM4.</p>
       <div class="rating-row">
         <span class="rating-label">CAM4</span>
         <div class="rating-bar-track"><div class="rating-bar-fill green" style="width:92%"></div></div>
@@ -1066,15 +1094,15 @@
   <section class="live-section">
     <div class="live-header">
       <div class="live-badge"><span class="live-dot"></span> Live</div>
-      <h2>Top 10 Populairste Niches op CAM4</h2>
-      <p>De meest bekeken categorieën — bekijk live cams per niche.</p>
+      <h2 data-i18n="topNiches">Top 10 Populairste Niches op CAM4</h2>
+      <p data-i18n="topNichesSub">De meest bekeken categorieën — bekijk live cams per niche.</p>
     </div>
     <div id="niches-container"></div>
   </section>
 
   <!-- Final Score -->
   <section class="comparison">
-    <h2 class="section-title">Eindscore</h2>
+    <h2 class="section-title" data-i18n="finalScore">Eindscore</h2>
     <table class="compare-table">
       <thead>
         <tr>
@@ -1095,7 +1123,7 @@
 
   <!-- FAQ -->
   <section class="faq-section">
-    <h2 class="section-title">Veelgestelde Vragen</h2>
+    <h2 class="section-title" data-i18n="faqTitle">Veelgestelde Vragen</h2>
     <div class="faq-list">
 
       <div class="faq-item">
@@ -1243,19 +1271,19 @@
 
   <!-- CTA -->
   <section class="cta-section">
-    <h2>Klaar om de winnaar te proberen?</h2>
-    <p>Sluit je aan bij duizenden kijkers die zijn overgestapt naar CAM4 voor een betere, vrijere ervaring.</p>
+    <h2 data-i18n="ctaTitle">Klaar om de winnaar te proberen?</h2>
+    <p data-i18n="ctaSub">Sluit je aan bij duizenden kijkers die zijn overgestapt naar CAM4 voor een betere, vrijere ervaring.</p>
     <a href="#" class="cta-btn" id="cta-link" rel="nofollow">
-      Bezoek CAM4 — Gratis &amp; Zonder Account →
+      <span data-i18n="ctaBtn">Bezoek CAM4 — Gratis &amp; Zonder Account →</span>
     </a>
-    <p class="cta-sub">100% gratis kijken · Geen account nodig · 18+ only</p>
-    <p style="margin-top:16px;color:var(--text-muted);font-size:0.85rem;">Liever Stripchat proberen? <a href="#" class="stripchat-link" target="_blank" rel="nofollow noopener" style="color:var(--text-muted);text-decoration:underline;">Bekijk Stripchat hier</a></p>
+    <p class="cta-sub" data-i18n="ctaFree">100% gratis kijken · Geen account nodig · 18+ only</p>
+    <p style="margin-top:16px;color:var(--text-muted);font-size:0.85rem;"><span data-i18n="ctaStripchat">Liever Stripchat proberen?</span> <a href="#" class="stripchat-link" target="_blank" rel="nofollow noopener" style="color:var(--text-muted);text-decoration:underline;" data-i18n="ctaStripchatLink">Bekijk Stripchat hier</a></p>
   </section>
 
   <!-- Footer -->
   <footer class="footer">
-    <p id="footer-date">Deze vergelijking is gebaseerd op openbaar beschikbare informatie en gebruikstests van september 2026.</p>
-    <p style="margin-top:8px;">Deze site bevat affiliate links. We kunnen een commissie verdienen zonder extra kosten voor jou. · <a href="/privacy.html">Privacy</a> · Alleen 18+</p>
+    <p id="footer-date" data-i18n-tpl="footerDisclaimer">Deze vergelijking is gebaseerd op openbaar beschikbare informatie en gebruikstests van september 2026.</p>
+    <p style="margin-top:8px;"><span data-i18n="footerAffiliate">Deze site bevat affiliate links. We kunnen een commissie verdienen zonder extra kosten voor jou.</span> · <a href="/privacy.html" data-i18n="footerPrivacy">Privacy</a> · <span data-i18n="footerAdults">Alleen 18+</span></p>
   </footer>
 
   <script>
@@ -1497,6 +1525,170 @@
           document.getElementById('niches-container').innerHTML = '<div class="cam-grid-loading"><a href="' + affiliateUrl + '" style="color:var(--accent);text-decoration:none;font-weight:600;">Bekijk live cams op CAM4 →</a></div>';
         });
     })();
+
+      // === i18n Engine ===
+      (function() {
+        var now = new Date();
+        var year = now.getFullYear();
+
+        function getMonthLabel(lang) {
+          return T[lang].months[now.getMonth()];
+        }
+
+        function tpl(str, lang) {
+          return str.replace('%%YEAR%%', year).replace('%%MONTH%%', getMonthLabel(lang));
+        }
+
+        function detectLang() {
+          var saved = localStorage.getItem('site_lang');
+          if (saved && T[saved]) return saved;
+          var nav = (navigator.language || navigator.userLanguage || 'nl').toLowerCase();
+          var code = nav.split('-')[0];
+          return T[code] ? code : 'nl';
+        }
+
+        function applyLang(lang) {
+          if (!T[lang]) lang = 'nl';
+          var t = T[lang];
+          localStorage.setItem('site_lang', lang);
+
+          // html lang
+          document.getElementById('html-root').setAttribute('lang', t.htmlLang);
+
+          // title & meta
+          document.title = tpl(t.title, lang);
+          var metaDesc = document.querySelector('meta[name="description"]');
+          if (metaDesc) metaDesc.setAttribute('content', tpl(t.metaDesc, lang));
+
+          // data-i18n (textContent)
+          document.querySelectorAll('[data-i18n]').forEach(function(el) {
+            var key = el.getAttribute('data-i18n');
+            if (t[key]) el.textContent = t[key];
+          });
+
+          // data-i18n-html (innerHTML)
+          document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+            var key = el.getAttribute('data-i18n-html');
+            if (t[key]) el.innerHTML = t[key];
+          });
+
+          // data-i18n-tpl (textContent with date template)
+          document.querySelectorAll('[data-i18n-tpl]').forEach(function(el) {
+            var key = el.getAttribute('data-i18n-tpl');
+            if (t[key]) el.textContent = tpl(t[key], lang);
+          });
+
+          // Comparison table
+          var tableKeys = [
+            ['feature', 'freeContent', 'accountNeeded', 'videoQuality', 'privacy',
+             'interactiveFeatures', 'mobileExperience', 'communitySocial', 'diversityModels'],
+            // CAM4 column
+            [null, 'fullyFree', 'noAccount', 'hd4k', 'anonBrowsing',
+             'tipsToys', 'excellentPwa', 'profilesFollow', 'countries70'],
+            // Stripchat column
+            [null, 'fullyFree', 'noAccount', 'hd4k', 'basicPrivacy',
+             'tipsToysBasic', 'wellOptimized', 'minimal', 'good']
+          ];
+          var rows = document.querySelectorAll('.compare-table tbody tr');
+          rows.forEach(function(row, ri) {
+            var cells = row.querySelectorAll('td');
+            for (var ci = 0; ci < 3; ci++) {
+              var key = tableKeys[ci] && tableKeys[ci][ri + 1];
+              if (key && t[key] && cells[ci]) cells[ci].textContent = t[key];
+            }
+            if (tableKeys[0][ri + 1] && t[tableKeys[0][ri + 1]] && cells[0]) cells[0].textContent = t[tableKeys[0][ri + 1]];
+          });
+          // Table headers
+          var ths = document.querySelectorAll('.compare-table thead th');
+          if (ths[0] && t.feature) ths[0].textContent = t.feature;
+
+          // Detail cards
+          var cardKeys = [
+            {title: 'freeAccessTitle', text: 'freeAccessText', badge: 'tie'},
+            {title: 'privacyTitle', text: 'privacyText', badge: 'cam4Wins'},
+            {title: 'mobileTitle', text: 'mobileText', badge: 'tie'},
+            {title: 'interactiveTitle', text: 'interactiveText', badge: 'cam4Wins'},
+            {title: 'diversityTitle', text: 'diversityText', badge: 'cam4Wins'},
+            {title: 'communityTitle', text: 'communityText', badge: 'cam4Wins'},
+            {title: 'streamTitle', text: 'streamText', badge: 'tie'},
+            {title: 'performanceTitle', text: 'performanceText', badge: 'cam4Wins'}
+          ];
+          var cards = document.querySelectorAll('.detail-card');
+          cards.forEach(function(card, i) {
+            if (!cardKeys[i]) return;
+            var h3 = card.querySelector('h3');
+            var p = card.querySelector('p');
+            var badge = card.querySelector('.winner-badge');
+            if (h3 && t[cardKeys[i].title]) {
+              var emoji = h3.querySelector('.emoji');
+              var emojiHtml = emoji ? emoji.outerHTML : '';
+              var badgeHtml = badge ? ' ' + badge.outerHTML : '';
+              h3.innerHTML = emojiHtml + ' ' + t[cardKeys[i].title] + badgeHtml;
+              // re-set badge text
+              badge = h3.querySelector('.winner-badge');
+              if (badge && t[cardKeys[i].badge]) badge.textContent = t[cardKeys[i].badge];
+            }
+            if (p && t[cardKeys[i].text]) p.innerHTML = t[cardKeys[i].text];
+          });
+
+          // Niches detail card
+          var nicheCard = document.querySelector('.comparison + .live-section');
+          // handled by data-i18n already for section titles
+
+          // FAQ
+          var faqItems = document.querySelectorAll('.faq-item');
+          if (t.faq) {
+            t.faq.forEach(function(faqEntry, i) {
+              if (!faqItems[i]) return;
+              var qSpan = faqItems[i].querySelector('.faq-question span:first-child');
+              var aDiv = faqItems[i].querySelector('.faq-answer-inner');
+              if (qSpan) qSpan.textContent = faqEntry.q;
+              if (aDiv) aDiv.textContent = faqEntry.a;
+            });
+          }
+
+          // Final score table header
+          var scoreThs = document.querySelectorAll('.comparison:last-of-type .compare-table thead th');
+          // leave CAM4 ★ and Stripchat as-is
+          if (scoreThs[0] && t.totalScore) {
+            // find the score table by checking if first row says Totaalscore
+            var scoreTd = document.querySelectorAll('.comparison:last-of-type .compare-table tbody td');
+            if (scoreTd[0]) scoreTd[0].textContent = t.totalScore;
+          }
+
+          // Update affiliate link CAM4 niche domain
+          // (niche links are built dynamically — update cam4Domain for next load)
+          window._cam4Domain = t.cam4Domain;
+
+          // Re-set cam4/stripchat link hrefs
+          var cam4Links = document.querySelectorAll('.cam4-link');
+          for (var i = 0; i < cam4Links.length; i++) {
+            cam4Links[i].href = affiliateUrl;
+            cam4Links[i].setAttribute('target', '_blank');
+            cam4Links[i].setAttribute('rel', 'nofollow noopener');
+          }
+          var scLinks = document.querySelectorAll('.stripchat-link');
+          for (var j = 0; j < scLinks.length; j++) {
+            scLinks[j].href = stripchatUrl;
+          }
+
+          // Active button
+          document.querySelectorAll('.lang-btn').forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+          });
+        }
+
+        // Language button clicks
+        document.querySelectorAll('.lang-btn').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            applyLang(btn.getAttribute('data-lang'));
+          });
+        });
+
+        // Initial apply
+        var initialLang = detectLang();
+        if (initialLang !== 'nl') applyLang(initialLang);
+      })();
   </script>
 
 </body>
