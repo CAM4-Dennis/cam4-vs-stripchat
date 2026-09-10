@@ -1324,13 +1324,18 @@
         window.location.href = 'https://www.google.nl';
       });
 
-      // === Affiliate URLs ===
+      // === Affiliate URLs (window scope for i18n access) ===
       var affSub = 'cam4vsstripchat';
       var affiliateBase = 'https://offers.cam4tracking.com/aff_c?offer_id=278&aff_id=1961&aff_sub=' + affSub;
-      var affiliateUrl = affiliateBase + '&url=https://www.cam4.com';
+      window.affiliateUrl = affiliateBase + '&url=https://www.cam4.com';
+      window.affiliateBase = affiliateBase;
       var stripchatUserId = '143a6a41ca48f0d679a727aa16aac452f9aa7e09ec7f2bc56b5475dcfccd5975';
       var stripchatSourceId = 'cam4_vs_stripchat';
-      var stripchatUrl = 'https://go.whitetrafsa.com/?sourceId=' + stripchatSourceId + '&userId=' + stripchatUserId;
+      window.stripchatUrl = 'https://go.whitetrafsa.com/?sourceId=' + stripchatSourceId + '&userId=' + stripchatUserId;
+      window.stripchatUserId = stripchatUserId;
+      window.stripchatSourceId = stripchatSourceId;
+      var affiliateUrl = window.affiliateUrl;
+      var stripchatUrl = window.stripchatUrl;
 
       // Update all CTA links
       var ctaLinks = document.querySelectorAll('#cta-link, .cta-btn, #live-cta-link, .cam4-link');
@@ -1675,13 +1680,13 @@
           // Re-set cam4/stripchat link hrefs
           var cam4Links = document.querySelectorAll('.cam4-link');
           for (var i = 0; i < cam4Links.length; i++) {
-            cam4Links[i].href = affiliateUrl;
+            cam4Links[i].href = window.affiliateUrl || '#';
             cam4Links[i].setAttribute('target', '_blank');
             cam4Links[i].setAttribute('rel', 'nofollow noopener');
           }
           var scLinks = document.querySelectorAll('.stripchat-link');
           for (var j = 0; j < scLinks.length; j++) {
-            scLinks[j].href = stripchatUrl;
+            scLinks[j].href = window.stripchatUrl || '#';
           }
 
           // Active button
