@@ -1412,7 +1412,8 @@
           });
       }
 
-      loadCams('cam-grid-top', 'cam-loading-top', 1, 10);
+      var isMobile = window.innerWidth <= 640;
+      loadCams('cam-grid-top', 'cam-loading-top', 1, isMobile ? 6 : 10);
 
       // === Stripchat cams ===
       function loadStripchat(containerId, tag, limit) {
@@ -1454,10 +1455,10 @@
           scContainer.innerHTML = '<div class="cam-grid-loading"><a href="' + stripchatUrl + '" style="color:var(--accent);text-decoration:none;font-weight:600;">Bekijk Stripchat \u2192</a></div>';
         });
       }
-      loadStripchat('stripchat-grid', 'girls', 5);
-      loadStripchat('stripchat-grid-2', 'couples', 5);
-      loadCams('cam-grid', 'cam-loading', 2);
-      loadCams('cam-grid-2', 'cam-loading-2', 3);
+      loadStripchat('stripchat-grid', 'girls', isMobile ? 3 : 5);
+      loadStripchat('stripchat-grid-2', 'couples', isMobile ? 3 : 5);
+      loadCams('cam-grid', 'cam-loading', 2, isMobile ? 6 : 8);
+      loadCams('cam-grid-2', 'cam-loading-2', 3, isMobile ? 6 : 8);
 
       // === Top 10 Niches ===
       var niches = [
@@ -1507,7 +1508,7 @@
           var allModels = Array.isArray(data) ? data : [];
           var container = document.getElementById('niches-container');
           var html = '';
-          var perNiche = 5;
+          var perNiche = isMobile ? 6 : 5;
 
           niches.forEach(function(niche, i) {
             var nicheUrl = affiliateBase + '&aff_sub2=' + encodeURIComponent(niche.tag) + '&url=https://nl.cam4.com/niches/' + encodeURIComponent(niche.tag);
